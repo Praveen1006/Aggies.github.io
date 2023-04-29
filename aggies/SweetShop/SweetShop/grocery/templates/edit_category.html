@@ -1,0 +1,36 @@
+{% extends 'navigation.html' %}
+{% block body %}
+{% load static %}
+
+
+
+<div class="container">
+    <h2 style="margin-top:20px" align="center">Edit Category</h2><hr>
+
+<div class="container-fluid" style="width:70%;margin-top:10%">
+<form method="post" action="">
+    {% csrf_token %}
+  <div class="form-group">
+    <label for="exampleInputEmail1">Category Name</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="cat" value="{{category.name}}" required>
+  </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+</div>
+
+{% ifequal error "no" %}
+<script>
+    alert('Product category has been updated.');
+    window.location=('{% url 'edit_category' category.id %}');
+</script>
+{% endifequal %}
+{% ifequal error "yes" %}
+<script>
+    alert('Something went wrong,Try Again...');
+</script>
+{% endifequal %}
+
+
+{% endblock %}

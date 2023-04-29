@@ -1,0 +1,67 @@
+{% extends 'navigation.html' %}
+{% block body %}
+{% load static %}
+<div class="container">
+    <h2 style="margin-top:20px" align="center">Edit Product Details</h2><hr>
+
+<div class="container-fluid" style="width:70%;margin-top:10%">
+<form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="inputEmail4">Product Name</label>
+      <input type="text" class="form-control" value="{{product.name}}" name="pname" id="inputEmail4" required>
+    </div>
+
+    </div>
+
+    <div class="form-row">
+     <div class="form-group col-md-6">
+    <label for="exampleInputPassword1">Product Image</label>
+    <input type="file" class="form-control" id="exampleInputPassword1" name="img">
+</div>
+    <div class="form-group col-md-6">
+    <img src="{{product.image.url}}" width="100px" height="80px">
+</div>
+    </div>
+
+
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+      <label for="inputState">Category</label>
+      <select id="inputState" class="form-control" name="cat">
+          <option value="{{product.category.name}}">{{product.category.name}}</option>
+          {% for i in cat %}
+        <option value="{{i.name}}">{{i.name}}</option>
+          {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Product Price</label>
+      <input type="number" class="form-control" name="price" required value="{{product.price}}" id="inputEmail4">
+    </div></div>
+    <div class="form-group">
+    <label for="exampleFormControlTextarea1">Description</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" name="desc" rows="3" required>{{product.desc}}</textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+</div>
+
+{% ifequal error "no" %}
+<script>
+    alert('Product detail has been updated.');
+    window.location=('{% url 'edit_product' product.id %}');
+</script>
+{% endifequal %}
+{% ifequal error "yes" %}
+<script>
+    alert('Something went wrong,Try Again...');
+</script>
+{% endifequal %}
+
+
+{% endblock %}
